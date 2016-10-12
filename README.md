@@ -20,7 +20,10 @@ In the [examples](./examples) folder you will find C#, JavaScript, & VBScript ex
 1. Output is logged to the [console](https://developers.google.com/web/tools/chrome-devtools/console/)
 
 
-### VBScript
+### VBA
+
+1. You'll need to add a reference to:
+    - `Microsoft XML, v6` (should work with any version)
 
 ## Configuration
 
