@@ -4,7 +4,7 @@ This repository contains example code for integrating with the SRS API.
 
 ## Contents
 
-In the [examples](./examples) folder you will find C#, JavaScript, & VBScript examples for integrating with the API.
+In the [examples](./examples) folder you will find [C#](./examples/csharp), [JavaScript](./examples/javascript), & [VBA](./examples/vba) examples for integrating with the API.
 
 ## Environment
 
@@ -41,4 +41,4 @@ Visit `http[s]://[yourServerName]/SRSAPI/Generic/Help`
 ## Want to help?
 
 - Check out our [CONTRIBUTING](./CONTRIBUTNG.md) guidelines
-- Check out our issues list.
+- Check out our [issues](/../../issues) list.
