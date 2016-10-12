@@ -22,7 +22,8 @@ In the [examples](./examples) folder you will find C#, JavaScript, & VBScript ex
 
 ### VBA
 
-1. You'll need to add a reference to:
+1. Enable Developer Tab in your target application (Word, [Excel](https://www.techonthenet.com/excel/questions/developer_tab2013.php), Access, etc.)
+1. You'll need to [add a reference](https://msdn.microsoft.com/en-us/library/office/gg264402.aspx) to:
     - `Microsoft XML, v6` (should work with any version)
 
 ## Configuration
