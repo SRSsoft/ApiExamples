@@ -30,20 +30,7 @@ API documentation is available for your installed version of the API on your pro
 
 Visit `http[s]://[yourServerName]/SRSAPI/Generic/Help`
 
-## TODO
-
-- Appointment Search
-    - ~~C#~~, VBScript, JS
-- Patient Search
-    - C#, VBScript, JS
-- Diagnosis Search
-    - C#, VBScript, JS
-- Location Search
-    - C#, VBScript, JS
-- FlexData
-    - C#, VBScript, JS
-
 ## Want to help?
 
-Check out our [CONTRIBUTING](./CONTRIBUTNG.md) guidelines
- 
+- Check out our [CONTRIBUTING](./CONTRIBUTNG.md) guidelines
+- Check out our issues list.
