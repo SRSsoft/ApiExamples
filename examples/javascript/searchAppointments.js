@@ -24,6 +24,7 @@ function searchAppointments(token, personId){
   return $.ajax({
     //Find all appointments by PersonId
     url: _basePath + 'Appointment?PersonId=' + personId,
+    headers: { "Authorization": token },
     type: "GET",
     datatype: 'json'
   }).catch(function(ex){
