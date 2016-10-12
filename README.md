@@ -16,6 +16,10 @@ In the [examples](./examples) folder you will find C#, JavaScript, & VBScript ex
 
 ### JS
 
+1. Examples are written in [ES5](https://kangax.github.io/compat-table/es5/) syntax with [jQuery 3.1.0](https://blog.jquery.com/2016/07/07/jquery-3-1-0-released-no-more-silent-errors/) though it should be backwards compatable down to JQuery 1.8. 
+1. Output is logged to the [console](https://developers.google.com/web/tools/chrome-devtools/console/)
+
+
 ### VBScript
 
 ## Configuration
