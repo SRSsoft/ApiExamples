@@ -40,5 +40,5 @@ Visit `http[s]://[yourServerName]/SRSAPI/Generic/Help`
 
 ## Want to help?
 
-- Check out our [CONTRIBUTING](./CONTRIBUTNG.md) guidelines
+- Check out our [CONTRIBUTING](./CONTRIBUTING.md) guidelines
 - Check out our [issues](/../../issues) list.
