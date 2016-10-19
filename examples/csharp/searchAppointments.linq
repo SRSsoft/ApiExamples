@@ -49,7 +49,7 @@ client.DefaultRequestHeaders.Add(
 
 // Examples: 
 // Date Range:	Appointment?personDeskDate=>=1/1/2016&personDeskDate=<=12/31/2016
-// Equality:	Appouintment?patientId=9820
+// Equality:	Appointment?patientId=9820
 // Or list:		Appointment?patientID=9820,9783
 // paging: 		Appointment?patientId=9820&_page=2
 HttpResponseMessage response = client.GetAsync("Appointment?patientId=9820&_page=2").Result; // Blocking call!
