@@ -1,10 +1,10 @@
 Option Explicit
 
-Public Const m_baseUri As String = "https://[yourServerName]/SRSAPI/Generic/"
+Const m_baseUri As String = "https://[yourServerName]/SRSAPI/Generic/"
 
 Function login(userName As String, password As String) As String
 
-    Dim objHTTP As New MSXML2.XMLHTTP
+    Dim objHTTP As New MSXML2.XMLHTTP60
     Dim URL As String
     
     Set objHTTP = CreateObject("MSXML2.ServerXMLHTTP")
@@ -24,7 +24,7 @@ Sub searchAppointments()
     Dim token As String
     token = login("yourUserName", "yourPassword")
     
-    Dim objHTTP As New MSXML2.XMLHTTP
+    Dim objHTTP As New MSXML2.XMLHTTP60
     Dim URL As String
     
     Set objHTTP = CreateObject("MSXML2.ServerXMLHTTP")
