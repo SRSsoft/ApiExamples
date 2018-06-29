@@ -1,6 +1,6 @@
 <Query Kind="Statements">
   <Reference>&lt;RuntimeDirectory&gt;\System.Net.Http.dll</Reference>
-  <Reference>&lt;ProgramFilesX86&gt;\Microsoft ASP.NET\ASP.NET MVC 4\Assemblies\System.Net.Http.Formatting.dll</Reference>
+  <GACReference>System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</GACReference>
   <Namespace>System.Net.Http</Namespace>
   <Namespace>System.Net.Http.Formatting</Namespace>
   <Namespace>System.Net.Http.Headers</Namespace>
@@ -73,48 +73,71 @@ client.DefaultRequestHeaders.Add(
 
 Console.WriteLine("Token Retrieval");
 
-// Parameters.
-int personId = 9783; //SRS Patient Id
-int status = 0; //0 = Active, 1 = Inactive, 2 = Resolved
-Guid encounterId = new Guid("FBFF4DAC-E07C-4A53-B337-30774B60A38D"); // SRS appointment/encounter Id
-DateTime date = DateTime.Now; // The entry date of the data.
-int codeSystem = 16; //The type of code: 16 = ICD-10, 3 = ICD-9, 13 = SNOMED
-string code = "S06.0x1A"; // The code
-string codeDescription = "Concussion with loss of consciousness of 30 minutes or less, initial encounter"; // The code description
-int sourceId = 0; // 0 = SRS. You will need to use an assigned ID associated to your user account.
 
-HttpResponseMessage diagnosisResult = client.PostAsync("Diagnosis", new StringContent($@"{{
-   ""patientId"":{personId},
-   ""sourceId"":{sourceId},
-   ""recDate"":""{date}"",
-   ""code"":{{  
-      ""isActive"":true,
-      ""code"":""{code}"",
-      ""description"":""{codeDescription}"",
-      ""codeSystem"":{{  
-         ""codeSystemId"":{codeSystem}
-      }}
-   }},
-   ""activities"":[  
-      {{    
-         ""recDate"":""{date}"",
-         ""extDate"":""{date}"",
-         ""status"":{status},
-         ""sourceId"":{sourceId},
-         ""encounterId"":""{encounterId}""
-      }}
-   ]
-}}", Encoding.UTF8, "application/json")).Result; // Blocking call!
+Console.WriteLine("\r\nLOCATIONS\r\n"); 
 
-string result;
-if(diagnosisResult.IsSuccessStatusCode)
+response = client.GetAsync("Location?isActive=true").Result; // Blocking call!
+
+if(response.IsSuccessStatusCode)
 {
 	// Get the response body as a string. Blocking!
-	result = diagnosisResult.Content.ReadAsStringAsync().Result; // ReadAsAsync can also parse directly to an object
+	string dataObjects = response.Content.ReadAsStringAsync().Result; // ReadAsAsync can also parse directly to an object
+	
 	// Deserialize or parse (Newtonsoft.JSON, etc.)
-	Console.WriteLine(result); 
+	Console.WriteLine(dataObjects); 
 }
 else
 {
-	Console.WriteLine("{0} ({1})", (int)auth.StatusCode, auth.ReasonPhrase); 
+	Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase); 
+}
+
+Console.WriteLine("\r\nROOMS\r\n"); 
+
+response = client.GetAsync("Room?locationId=6").Result; // Blocking call!
+
+if(response.IsSuccessStatusCode)
+{
+	// Get the response body as a string. Blocking!
+	string dataObjects = response.Content.ReadAsStringAsync().Result; // ReadAsAsync can also parse directly to an object
+	
+	// Deserialize or parse (Newtonsoft.JSON, etc.)
+	Console.WriteLine(dataObjects); 
+}
+else
+{
+	Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase); 
+}
+
+Console.WriteLine("\r\nSTATUS UPDATE\r\n"); 
+
+string locationId = "6"; // SPINE CTRj. From the Location API.
+string roomId = "6"; // From the Rooms API filtered by location
+string checkInTime = "2018-04-10 9:01"; // value must be present, but does not matter (current time will be used instead)
+string patientTrackingStatusId = "1"; // from the PatientTrackingStatus API
+string encounterId = "AF157580-D7FF-4F55-AE61-B2B5FFF8D447"; //Carter, Jimmy
+
+HttpResponseMessage diagnosisResult = client.PutAsync($"PatientTracking/{encounterId}", new StringContent($@"{{
+   ""locationId"":{locationId},
+   ""currentRoomId"":{roomId},
+   ""checkInTime"":""{checkInTime}"",
+   ""currentPatientStatusTypeId"":{patientTrackingStatusId}
+}}", Encoding.UTF8, "application/json")).Result; // Blocking call!
+
+
+if(diagnosisResult.IsSuccessStatusCode)
+{
+	// Get the response body as a string. Blocking!
+	string dataObjects = diagnosisResult.Content.ReadAsStringAsync().Result; // ReadAsAsync can also parse directly to an object
+	
+	// Deserialize or parse (Newtonsoft.JSON, etc.)
+	Console.WriteLine(dataObjects); 
+}
+else
+{
+	Console.WriteLine("{0} ({1})", (int)diagnosisResult.StatusCode, diagnosisResult.ReasonPhrase); 
+	// Get the response body as a string. Blocking!
+	string dataObjects = diagnosisResult.Content.ReadAsStringAsync().Result; // ReadAsAsync can also parse directly to an object
+	
+	// Deserialize or parse (Newtonsoft.JSON, etc.)
+	Console.WriteLine(dataObjects); 
 }

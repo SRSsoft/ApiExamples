@@ -1,6 +1,6 @@
 <Query Kind="Statements">
   <Reference>&lt;RuntimeDirectory&gt;\System.Net.Http.dll</Reference>
-  <Reference>&lt;ProgramFilesX86&gt;\Microsoft ASP.NET\ASP.NET MVC 4\Assemblies\System.Net.Http.Formatting.dll</Reference>
+  <GACReference>System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</GACReference>
   <Namespace>System.Net.Http</Namespace>
   <Namespace>System.Net.Http.Formatting</Namespace>
   <Namespace>System.Net.Http.Headers</Namespace>
@@ -73,48 +73,39 @@ client.DefaultRequestHeaders.Add(
 
 Console.WriteLine("Token Retrieval");
 
-// Parameters.
-int personId = 9783; //SRS Patient Id
-int status = 0; //0 = Active, 1 = Inactive, 2 = Resolved
-Guid encounterId = new Guid("FBFF4DAC-E07C-4A53-B337-30774B60A38D"); // SRS appointment/encounter Id
-DateTime date = DateTime.Now; // The entry date of the data.
-int codeSystem = 16; //The type of code: 16 = ICD-10, 3 = ICD-9, 13 = SNOMED
-string code = "S06.0x1A"; // The code
-string codeDescription = "Concussion with loss of consciousness of 30 minutes or less, initial encounter"; // The code description
-int sourceId = 0; // 0 = SRS. You will need to use an assigned ID associated to your user account.
+Console.WriteLine("\r\nSTATUS UPDATE\r\n"); 
 
-HttpResponseMessage diagnosisResult = client.PostAsync("Diagnosis", new StringContent($@"{{
-   ""patientId"":{personId},
-   ""sourceId"":{sourceId},
-   ""recDate"":""{date}"",
-   ""code"":{{  
-      ""isActive"":true,
-      ""code"":""{code}"",
-      ""description"":""{codeDescription}"",
-      ""codeSystem"":{{  
-         ""codeSystemId"":{codeSystem}
-      }}
-   }},
-   ""activities"":[  
-      {{    
-         ""recDate"":""{date}"",
-         ""extDate"":""{date}"",
-         ""status"":{status},
-         ""sourceId"":{sourceId},
-         ""encounterId"":""{encounterId}""
-      }}
-   ]
+string state = "1"; // SPINE CTRj. From the Location API.
+string consentType = "IMMUNIZATION"; // From the Rooms API filtered by location
+string consentDate = "2009-06-15T13:45:30.0000000-04:00";
+string consentExpiredDate = "2009-06-15T13:45:30.0000000-04:00"; 
+string isConsent = "true"; // from the PatientTrackingStatus API
+string personId = "1195034206"; //Carter, Jimmy
+
+HttpResponseMessage result = client.Post($"PatientConsent", new StringContent($@"{{
+   ""state"":{state},
+   ""consentType"":{consentType},
+   ""consentDate"":""{consentDate}"",
+   ""consentExpiredDate"":""{consentExpiredDate}"",
+   ""isConsent"":""{isConsent}"",
+   ""personId"":""{personId}""
 }}", Encoding.UTF8, "application/json")).Result; // Blocking call!
 
-string result;
-if(diagnosisResult.IsSuccessStatusCode)
+
+if(result.IsSuccessStatusCode)
 {
 	// Get the response body as a string. Blocking!
-	result = diagnosisResult.Content.ReadAsStringAsync().Result; // ReadAsAsync can also parse directly to an object
+	string dataObjects = result.Content.ReadAsStringAsync().Result; // ReadAsAsync can also parse directly to an object
+	
 	// Deserialize or parse (Newtonsoft.JSON, etc.)
-	Console.WriteLine(result); 
+	Console.WriteLine(dataObjects); 
 }
 else
 {
-	Console.WriteLine("{0} ({1})", (int)auth.StatusCode, auth.ReasonPhrase); 
+	Console.WriteLine("{0} ({1})", (int)result.StatusCode, result.ReasonPhrase); 
+	// Get the response body as a string. Blocking!
+	string dataObjects = result.Content.ReadAsStringAsync().Result; // ReadAsAsync can also parse directly to an object
+	
+	// Deserialize or parse (Newtonsoft.JSON, etc.)
+	Console.WriteLine(dataObjects); 
 }
