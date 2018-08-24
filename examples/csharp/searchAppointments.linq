@@ -20,7 +20,7 @@ Encoding encoding = Encoding.UTF8;
 
 // Replace [ClientIdentifier] and [ClientSecret] with the values issued to you by srs.
 string credential = string.Format("{0}:{1}", "[ClientIdentifier]", "[ClientSecret]");
-string authToken = authToken = Convert.ToBase64String(encoding.GetBytes(credential));
+string authToken = Convert.ToBase64String(encoding.GetBytes(credential));
 
 HttpClient tokenClient = new HttpClient(); 
 
